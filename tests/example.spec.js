@@ -1,19 +1,20 @@
-// @ts-check
-import { test, expect } from '@playwright/test';
+const { test, expect } = require('@playwright/test');
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+test('Deve realizar login com sucesso', async ({ page }) => {
+  // 1. Acessar o site
+  await page.goto('https://www.saucedemo.com/');
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
-});
+  // 2. Preencher o usuário
+  await page.locator('[data-test="username"]').fill('standard_user');
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+  // 3. Preencher a senha
+  await page.locator('[data-test="password"]').fill('secret_sauce');
 
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
+  // 4. Clicar no botão de login
+  await page.locator('[data-test="login-button"]').click();
 
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
+  // 5. Validação: Verificar se entramos na página de produtos
+  await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html');
+  const headerTitle = await page.locator('.title');
+  await expect(headerTitle).toHaveText('Products');
 });
