@@ -1,12 +1,12 @@
-# 🎭 Automação de Testes: Login Sauce Demo (Playwright + BDD)
+# 🎭 Automação de Testes: Login Sauce Demo (Playwright + BDD + k6)
 
-Este repositório contém uma automação de testes de ponta a ponta (E2E) para validar o fluxo de login no site **Sauce Demo**. O projeto utiliza o framework **Playwright** e segue as melhores práticas de mercado, como o modelo **BDD** e segurança de dados sensíveis.
+Este repositório contém uma automação completa para validar o fluxo de login no site **Sauce Demo**. O projeto utiliza as melhores práticas de QA do mercado, unindo testes funcionais, performance e segurança.
 
 ---
 
 ## 📝 Documentação do Teste (BDD - Gherkin)
 
-Para garantir que o comportamento do sistema atenda aos requisitos de negócio, o teste foi estruturado seguindo o modelo BDD:
+O comportamento do sistema foi estruturado seguindo o modelo BDD para alinhar os requisitos técnicos aos de negócio:
 
 **Funcionalidade:** Login no Sistema  
 **Cenário:** Realizar login com sucesso com um usuário comum
@@ -20,36 +20,37 @@ Para garantir que o comportamento do sistema atenda aos requisitos de negócio, 
 ---
 
 ## 🛠️ Tecnologias e Ferramentas
-* **Engine:** [Playwright](https://playwright.dev/)
-* **Linguagem:** JavaScript
+* **Automação E2E:** [Playwright](https://playwright.dev/) (JavaScript)
+* **Performance:** [k6](https://k6.io/) (Teste de Carga)
 * **Segurança:** Dotenv (Variáveis de Ambiente)
 * **Versionamento:** GitHub
 
 ## 📂 Estrutura Técnica do Código
-
-O script de automação reflete exatamente os passos do BDD:
-
 1. **Navegação:** `page.goto()` acessa a URL inicial.
-2. **Ação (Input):** Localiza os seletores `data-test="username"` e `data-test="password"` para preencher as credenciais extraídas do arquivo `.env`.
-3. **Ação (Click):** Executa o comando `.click()` no botão de login.
-4. **Validação (Asserção):** * Verifica se a URL contém `/inventory.html`.
-   * Confirma a presença do elemento `.title` com o texto "Products".
+2. **Ação:** Localiza seletores `data-test` para preencher credenciais protegidas via `.env`.
+3. **Validação:** Verifica a URL `/inventory.html` e a visibilidade do título "Products".
+
+---
+
+## ⚡ Testes de Performance (k6)
+Além do funcional, o projeto simula a estabilidade do sistema sob estresse:
+* **Cenário:** 5 usuários virtuais acessando o site simultaneamente por 20 segundos.
+* **Métrica (Threshold):** 95% das requisições devem responder em menos de 500ms.
 
 ---
 
 ## 📊 Relatórios e Evidências
-Este projeto gera evidências automáticas de cada execução:
-* **Screenshots:** Captura de tela do resultado final.
-* **Vídeos:** Gravação completa da execução do robô.
-* **HTML Report:** Relatório interativo para análise.
+O projeto gera evidências automáticas de cada execução para facilitar a análise de bugs:
+* **Screenshots:** Captura da tela final do teste.
+* **Vídeos:** Gravação completa da interação do robô (configurado com `slowMo` para melhor visualização).
+* **HTML Report:** Relatório interativo gerado pelo Playwright.
 
 ---
 
 ## 🚀 Como Executar o Projeto
 
 ### 1. Configuração de Segurança (.env)
-Este projeto utiliza variáveis de ambiente para proteger dados sensíveis. Para rodar os testes localmente, crie um arquivo chamado `.env` na raiz do projeto e adicione as chaves abaixo:
-
+Crie um arquivo chamado `.env` na raiz do projeto e adicione:
 ```env
 USER_SAUCE=seu_usuario_aqui
 PASSWORD_SAUCE=sua_senha_aqui
