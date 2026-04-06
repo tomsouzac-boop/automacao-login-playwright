@@ -2,38 +2,41 @@
 import { defineConfig, devices } from '@playwright/test';
 
 /**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
+ * Carregar variáveis de ambiente do arquivo .env.
  */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
+import dotenv from 'dotenv';
+import path from 'path';
+dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({
   testDir: './tests',
-  /* Run tests in files in parallel */
+  /* Executar testes em arquivos em paralelo */
   fullyParallel: true,
-  /* Fail the build on CI if you accidentally left test.only in the source code. */
+  /* Falhar a build se esquecer test.only no código */
   forbidOnly: !!process.env.CI,
-  /* Retry on CI only */
+  /* Repetir o teste em caso de falha apenas no CI */
   retries: process.env.CI ? 2 : 0,
-  /* Opt out of parallel tests on CI. */
+  /* Limitar workers no CI */
   workers: process.env.CI ? 1 : undefined,
-  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
+  /* Gerar relatório em HTML */
   reporter: 'html',
-  /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
+  
+  /* Configurações compartilhadas para todos os projetos */
   use: {
-    /* Base URL to use in actions like `await page.goto('')`. */
-    // baseURL: 'http://localhost:3000',
+    /* URL base do site de testes */
+    baseURL: 'https://www.saucedemo.com',
 
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    /* --- CONFIGURAÇÃO DE EVIDÊNCIAS --- */
+    screenshot: 'on',         // Tira print de cada passo
+    video: 'on',              // Grava vídeo de cada execução
+    trace: 'on-first-retry',  // Gera o Trace Viewer se houver erro
+    /* ---------------------------------- */
   },
 
-  /* Configure projects for major browsers */
+  /* Configurar projetos para os principais navegadores */
   projects: [
     {
       name: 'chromium',
@@ -49,33 +52,5 @@ export default defineConfig({
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
     },
-
-    /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
-    // },
-
-    /* Test against branded browsers. */
-    // {
-    //   name: 'Microsoft Edge',
-    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
-    // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-    // },
   ],
-
-  /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://localhost:3000',
-  //   reuseExistingServer: !process.env.CI,
-  // },
 });
-
