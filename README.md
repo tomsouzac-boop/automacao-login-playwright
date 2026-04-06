@@ -31,4 +31,4 @@ Para rodar os testes e ver o navegador funcionando, execute:
 ```bash
 npx playwright test --headed
 
-### Candidato: [Elton de Souza Costa] Data: 06/04/2026
+Candidato: [Elton de Souza Costa] Data: 06/04/2026
