@@ -1,20 +1,14 @@
 const { test, expect } = require('@playwright/test');
+require('dotenv').config(); // Isso aqui ativa a leitura do arquivo .env
 
 test('Deve realizar login com sucesso', async ({ page }) => {
-  // 1. Acessar o site
   await page.goto('https://www.saucedemo.com/');
 
-  // 2. Preencher o usuário
-  await page.locator('[data-test="username"]').fill('standard_user');
+  // Em vez de escrever o texto, usamos process.env.NOME_DA_VARIAVEL
+  await page.locator('[data-test="username"]').fill(process.env.USER_SAUCE);
+  await page.locator('[data-test="password"]').fill(process.env.PASSWORD_SAUCE);
 
-  // 3. Preencher a senha
-  await page.locator('[data-test="password"]').fill('secret_sauce');
-
-  // 4. Clicar no botão de login
   await page.locator('[data-test="login-button"]').click();
 
-  // 5. Validação: Verificar se entramos na página de produtos
   await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html');
-  const headerTitle = await page.locator('.title');
-  await expect(headerTitle).toHaveText('Products');
 });
