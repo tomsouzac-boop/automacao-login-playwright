@@ -26,20 +26,27 @@ O comportamento do sistema foi estruturado seguindo o modelo BDD para alinhar os
 * **Versionamento:** GitHub
 
 ## 📂 Estrutura Técnica do Código
-1. **Navegação:** `page.goto()` acessa a URL inicial.
-2. **Ação:** Localiza seletores `data-test` para preencher credenciais protegidas via `.env`.
-3. **Validação:** Verifica a URL `/inventory.html` e a visibilidade do título "Products".
+* **Navegação:** `page.goto()` acessa a URL inicial.
+* **Ação:** Localiza seletores `data-test` para preencher credenciais protegidas via `.env`.
+* **Validação:** Verifica a URL `/inventory.html` e a visibilidade do título "Products".
 
 ---
 
 ## ⚡ Testes de Performance (k6)
+
 Além do funcional, o projeto simula a estabilidade do sistema sob estresse:
 * **Cenário:** 5 usuários virtuais acessando o site simultaneamente por 20 segundos.
 * **Métrica (Threshold):** 95% das requisições devem responder em menos de 500ms.
 
+### ⚡ Diferenciais do Teste de Carga:
+* **Escalabilidade:** Simulação de carga progressiva (Ramp-up) de 0 a 20 usuários simultâneos.
+* **Relatórios Visuais:** Geração de dashboard em HTML para análise de métricas de latência e taxa de requisições.
+* **Critérios de Sucesso (Thresholds):** O teste falha automaticamente se o tempo de resposta exceder o SLA de 500ms.
+
 ---
 
 ## 📊 Relatórios e Evidências
+
 O projeto gera evidências automáticas de cada execução para facilitar a análise de bugs:
 * **Screenshots:** Captura da tela final do teste.
 * **Vídeos:** Gravação completa da interação do robô (configurado com `slowMo` para melhor visualização).
@@ -50,6 +57,7 @@ O projeto gera evidências automáticas de cada execução para facilitar a aná
 ## 🚀 Como Executar o Projeto
 
 ### 1. Configuração de Segurança (.env)
+
 Crie um arquivo chamado `.env` na raiz do projeto e adicione:
 ```env
 USER_SAUCE=seu_usuario_aqui
